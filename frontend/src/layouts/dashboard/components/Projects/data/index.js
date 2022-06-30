@@ -13,10 +13,7 @@ import MDAvatar from "components/MDAvatar";
 import iconBulb from "assets/images/small-logos/icon-bulb.svg";
 
 export default function Data() {
-  const [balance, setBalance] = useState([5052.16]);
-  const [equity, setEquity] = useState([5558.67]);
-  const [time, setTime] = useState(['17:49:07']);
-
+  const [info, setInfo] = useState([{Equity: 5910.67, Balance: 5052.16, Time: '23:57:15'}]);
   
   useEffect(() => {
     getEquAndBalAndTime()
@@ -30,9 +27,7 @@ export default function Data() {
   let getEquAndBalAndTime = () => {
     axios.get("api/getinfo")
     .then(res => {
-      setBalance (res.data.map(item => item.Balance));
-      setEquity(res.data.map(item => item.Equity));
-      setTime(res.data.map(item => item.Time));
+      setInfo(res.data);
     }
     )
     .catch(err => {
@@ -59,39 +54,39 @@ export default function Data() {
 
     rows: [
       {
-        Equity: <Company image={iconBulb} name={equity[1]}/>,
+        Equity: <Company image={iconBulb} name={info.map(item => item.Equity)[1]}/>,
         Balance: <MDTypography variant="caption" color="text" fontWeight="medium">
-        {balance[1]}
+        {info.map(item => item.Balance)[1]}
               </MDTypography>,   
-        Time: <MDBox display="flex" py={1}>{time[1]}</MDBox>,
+        Time: <MDBox display="flex" py={1}>{info.map(item => item.Time)[1]}</MDBox>,
       },
       {
-        Equity: <Company image={iconBulb} name={equity[2]}/>,
+        Equity: <Company image={iconBulb} name={info.map(item => item.Equity)[2]}/>,
         Balance: <MDTypography variant="caption" color="text" fontWeight="medium">
-        {balance[2]}
+        {info.map(item => item.Balance)[2]}
               </MDTypography>,   
-        Time: <MDBox display="flex" py={1}>{time[2]}</MDBox>,
+        Time: <MDBox display="flex" py={1}>{info.map(item => item.Time)[2]}</MDBox>,
       },
       {
-        Equity: <Company image={iconBulb} name={equity[3]}/>,
+        Equity: <Company image={iconBulb} name={info.map(item => item.Equity)[3]}/>,
         Balance: <MDTypography variant="caption" color="text" fontWeight="medium">
-        {balance[3]}
+        {info.map(item => item.Balance)[3]}
               </MDTypography>,   
-        Time: <MDBox display="flex" py={1}>{time[3]}</MDBox>,
+        Time: <MDBox display="flex" py={1}>{info.map(item => item.Time)[3]}</MDBox>,
       },
       {
-        Equity: <Company image={iconBulb} name={equity[4]}/>,
+        Equity: <Company image={iconBulb} name={info.map(item => item.Equity)[4]}/>,
         Balance: <MDTypography variant="caption" color="text" fontWeight="medium">
-        {balance[4]}
+        {info.map(item => item.Balance)[4]}
               </MDTypography>,   
-        Time: <MDBox display="flex" py={1}>{time[4]}</MDBox>,
+        Time: <MDBox display="flex" py={1}>{info.map(item => item.Time)[4]}</MDBox>,
       },
       {
-        Equity: <Company image={iconBulb} name={equity[5]}/>,
+        Equity: <Company image={iconBulb} name={info.map(item => item.Equity)[5]}/>,
         Balance: <MDTypography variant="caption" color="text" fontWeight="medium">
-        {balance[5]}
+        {info.map(item => item.Balance)[5]}
               </MDTypography>,   
-        Time: <MDBox display="flex" py={1}>{time[5]}</MDBox>,
+        Time: <MDBox display="flex" py={1}>{info.map(item => item.Time)[5]}</MDBox>,
       },
     ]
   };

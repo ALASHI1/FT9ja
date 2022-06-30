@@ -9,21 +9,26 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import django_heroku
 from pathlib import Path
-
+import environ
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+  ) 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+import os
+# import dj_database_url
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5ol4k_z(4017xdq@%u3*$b@7xqqzk#l3za!yn0bur1yu5b2@vj'
+SECRET_KEY = env('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if env('MODE') == 'dev' else False
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
@@ -79,21 +85,33 @@ WSGI_APPLICATION = 'equityBE.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#        'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'ft9ja',
+#         'CLIENT': {
+#           'host': "mongodb+srv://ALASHI:themdragon@cluster0.d85ko.mongodb.net/?retryWrites=true&w=majority",
+#           'authMechanism': 'SCRAM-SHA-1'
+#         }
 #     }
+#    } 
+
+# DATABASES = {
+#   'default': dj_database_url.config(conn_max_age=600)
 # }
 
+   
 DATABASES = {
-       'default': {
-           'ENGINE': 'djongo',
-           'NAME': 'ft9ja',
-       }
-   }
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'ft9ja',
+        'CLIENT': {
+          'host': "mongodb+srv://ALASHI:themdragon@cluster0.d85ko.mongodb.net/?retryWrites=true&w=majority",
+          'authMechanism': 'SCRAM-SHA-1'
+        }
+    }
+}
 
 CORS_ALLOW_ALL_ORIGINS= True
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -132,45 +150,21 @@ USE_L10N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT=os.path.join(BASE_DIR, "static/")
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ACC_ID = '703602b8-d914-4da1-be66-8c1fabb59659'
-
-ACC_ID2 = 'dfa21a87-e91a-4243-a8f3-9b0f71a2e9a0'
-
-
-
-TOKEN = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ZjcyNjYwMDM3NzM0MDRkMDQ3MWFhZmZiMm\
-ZkZDg0MSIsInBlcm1pc3Npb25zIjpbXSwidG9rZW5JZCI6IjIwMjEwMjEzIiwiaWF0IjoxNjU2MTU3MDc2LCJyZWFsV\
-XNlcklkIjoiNmY3MjY2MDAzNzczNDA0ZDA0NzFhYWZmYjJmZGQ4NDEifQ.V3YdG2gXSFlYckiygBQULbZus05fWYp\
-hO4PRq7SqT9K6D12iCLJQ75pX-zXcq0R8rTQT4Z9fbgfrEH8QjFgLE7XhJIJY0iO0f4Xd5qJHqd5MIZJVwBZwci\
-9E4g7OTfsvZiRCL8_Km8x80wZwakJSUhz1Kb6GXRLD2MsCS7sf1veOw8n0yz_Thq1LTLGxVEQLie1VtnTFrrO_\
-5wl9rwBIzhYj_lqiHesXKPo3X-IFt-wV7VOvxKifQs8oRbjn4wkMoTqNBS31damzaQv12_M91XH28MNXo8\
-pdf3ew31jCTf6s1jfRi8440bCldM6nTS4IPQkhnzc1dXLUi7mPLdXNfSiN5zGW6QR81j3A9MBvuKK\
-FqIvXaaUeznHWjde2gTpPTIw1xfJYNRew77fr91lnWyHizwYDHy4foXSlnzyl6h-BnKoRU5\
-IOAnjZAQdaH_QLVu-511Dl5TIZKTI8kOty0mXR1mVag8bgK4dJAQGJZbHWMgvLc\
-1NlJD22WgbJlyRm05LBmz-4OWIHn3Wvyh_7tHSoLK0b3XL0VVfdKnJivdyks48\
-4pY3MXC8ImoHFqcm93oeEL8Ng0GjE6FmHfn3ASYG1mI8rFl1fBH8lgZ_mLiGBReBZrh\
-MGkXGVUIm9C6Q41z8Cd9QjFXDID3UbX670nWf26UeZZQ5kcF2hrX8APn0"
-
-TOKEN2 = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ZjcyNjYwMDM3NzM0MDRk\
-MDQ3MWFhZmZiMmZkZDg0MSIsInBlcm1pc3Npb25zIjpbXSwidG9rZW5JZCI6IjIwMjEwMjEzIiwia\
-WF0IjoxNjU2MTU3MDc2LCJyZWFsVXNlcklkIjoiNmY3MjY2MDAzNzczNDA0ZDA0NzFhYWZmY\
-jJmZGQ4NDEifQ.V3YdG2gXSFlYckiygBQULbZus05fWYphO4PRq7SqT9K6D12iCLJQ75p\
-X-zXcq0R8rTQT4Z9fbgfrEH8QjFgLE7XhJIJY0iO0f4Xd5qJHqd5MIZJVwBZwci9E4g7\
-OTfsvZiRCL8_Km8x80wZwakJSUhz1Kb6GXRLD2MsCS7sf1veOw8n0yz_Thq1LTLGxVE\
-QLie1VtnTFrrO_5wl9rwBIzhYj_lqiHesXKPo3X-IFt-wV7VOvxKifQs8oRbjn4wkMo\
-TqNBS31damzaQv12_M91XH28MNXo8pdf3ew31jCTf6s1jfRi8440bCldM6nTS4IPQkhn\
-zc1dXLUi7mPLdXNfSiN5zGW6QR81j3A9MBvuKKFqIvXaaUeznHWjde2gTpPTIw1xf\
-JYNRew77fr91lnWyHizwYDHy4foXSlnzyl6h-BnKoRU5IOAnjZAQdaH_QLVu-511Dl5TIZKTI\
-8kOty0mXR1mVag8bgK4dJAQGJZbHWMgvLc1NlJD22WgbJlyRm05LBmz-4OWIHn3Wvyh_7tHSoLK0b3XL0V\
-VfdKnJivdyks484pY3MXC8ImoHFqcm93oeEL8Ng0GjE6FmHfn3ASYG1mI8rFl1fBH8lgZ_mLiGBReBZrh\
-MGkXGVUIm9C6Q41z8Cd9QjFXDID3UbX670nWf26UeZZQ5kcF2hrX8APn0"
+ACC_ID = env('ACC_ID')
+ACC_ID2 = env('ACC_ID2')
+TOKEN =  env('TOKEN')
+TOKEN2 = env('TOKEN2')
+django_heroku.settings(locals(), databases=False),
