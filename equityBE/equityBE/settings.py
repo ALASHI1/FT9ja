@@ -84,8 +84,20 @@ WSGI_APPLICATION = 'equityBE.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+DATABASES = {
+       'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'ft9ja',
+    }
+   } 
+
 # DATABASES = {
-#        'default': {
+#   'default': dj_database_url.config(conn_max_age=600)
+# }
+
+   
+# DATABASES = {
+#     'default': {
 #         'ENGINE': 'djongo',
 #         'NAME': 'ft9ja',
 #         'CLIENT': {
@@ -93,23 +105,7 @@ WSGI_APPLICATION = 'equityBE.wsgi.application'
 #           'authMechanism': 'SCRAM-SHA-1'
 #         }
 #     }
-#    } 
-
-# DATABASES = {
-#   'default': dj_database_url.config(conn_max_age=600)
 # }
-
-   
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'ft9ja',
-        'CLIENT': {
-          'host': "mongodb+srv://ALASHI:themdragon@cluster0.d85ko.mongodb.net/?retryWrites=true&w=majority",
-          'authMechanism': 'SCRAM-SHA-1'
-        }
-    }
-}
 
 CORS_ALLOW_ALL_ORIGINS= True
 # Password validation

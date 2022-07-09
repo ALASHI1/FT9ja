@@ -17,9 +17,10 @@ def check():
         print(eq_bal_url_res.json()['balance'], eq_bal_url_res.json()['equity'])
         print(time_url_res.json()['brokerTime'])
         time = (time_url_res.json()['brokerTime'].split(' ')[1]).split('.')[0]
+        date = (time_url_res.json()['brokerTime'].split(' ')[0])
         TradeInfo.objects.create(Equity=eq_bal_url_res.json()['equity'], 
                                 Balance=eq_bal_url_res.json()['balance'], 
-                                Time=time)
+                                Time=time, date=date)
     elif check_and_deploy2():
         eq_bal_url = f'{baseurl2}/accountInformation'
         time_url = f'{baseurl2}/server-time'
@@ -28,9 +29,10 @@ def check():
         print(eq_bal_url_res.json()['balance'], eq_bal_url_res.json()['equity'])
         print( time_url_res.json()['brokerTime'])
         time = (time_url_res.json()['brokerTime'].split(' ')[1]).split('.')[0]
+        date = (time_url_res.json()['brokerTime'].split(' ')[0])
         TradeInfo.objects.create(Equity=eq_bal_url_res.json()['equity'], 
                                 Balance=eq_bal_url_res.json()['balance'], 
-                                Time=time)
+                                Time=time, date=date)
     else:
         api_status = ApiStatus.objects.get_or_create(Name='Status')
         api_status[0].Status = True
